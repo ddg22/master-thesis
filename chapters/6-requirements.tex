@@ -1,0 +1,31 @@
+\chapter{Requirements}
+
+\section{Requirements}
+In this chapter, our aim is to describe both the functional and non-functional requirements that guided us in the development of the comprehensive academic wallet system. These requirements were derived from an in-depth analysis of the use cases, as well as the specific needs and demands of the various stakeholders engaged with the system. This stakeholder group includes the administrator of the \acrfull{ew} system, students, and universities.
+
+\subsection{Functional Requirements}
+The primary functional requirement for the system administrator is the ability to register universities following their subscription request. This process must be preceded by a thorough verification of the provided data, in order to ensure that only trusted institutions are granted access to the system.
+
+Universities must be able to initiate a subscription by submitting their institutional information. Upon approval, they require secure authentication mechanisms to access the system and exercise their privileges. Authentication is a critical precondition for nearly all operations, including the viewing and modification of students' academic records. These operations may involve retrieving the list of courses attended by a student or issuing a new certification. Moreover, authenticated universities are responsible for creating \acrfull{sw} for newly enrolled students who do not yet posses one, as well as requesting permission from students to access their academic records. Delegating the creation of student \acrshort{sw} to universities accelerates the data verification process, as the system relies on the institution's trustworthiness to validate student information. Without proper authentication, access to both student and university data, whether for viewing or modification, must be strictly restricted. To support seamless integration with university \acrfull{lms}, the system should also expose comprehensive \acrfull{api} endpoints, enabling universities to interact with and utilize its full range of features.
+
+Students' functional requirements primarily revolve around accessing their academic records. The \acrshort{ew} system must enable students to securely authenticate and access their \acrshort{sw} via a web interface, which also provides the ability to view and manage their data. Once authenticated, students should be able to grant universities explicit permissions to access their records, with fine-grained control over viewing and modification rights. This capability is particularly crucial in enabling institutions that are not the student's home university to view and act upon their academic data when necessary.
+
+\subsection{Non-Functional Requirements}
+In addition to its core features, the system must fulfil several non-functional requirements that ensure robustness, maintainability, and alignment with the principles of decentralization. 
+
+To preserve its independence, \acrshort{ew} must avoid reliance on third-party cryptocurrency wallets, such as MetaMask or Coinbase, as well as on proprietary technologies. These constraints are essential to prevent external dependencies that could compromise the system’s availability or security due to changes in external policies or services.
+
+A key consideration for blockchain-based systems is the cost associated with on-chain storage operations. To address this, the system must minimize blockchain storage usage by storing only essential data directly on-chain, while leveraging alternative technologies to manage and store files.
+
+Academic records, by nature, must be verifiable and resistant to unauthorized modifications. The system must ensure that these records are temper-proof and cab be verified by third parties at any time, in alignment with the integrity requirements of academic data.
+
+Simplicity and ease of use are also critical. The system's focus is to provide users with an intuitive means to access and manage academic data. As such, both universities and students must be supported with a user-friendly interface that facilitates seamless interaction with the \acrshort{ew} platform.
+
+Finally, the adoption of blockchain technologies is driven by the desire to follow the defining characteristic of \Gls{web3} applications: decentralization. \acrshort{ew} should be designed to operate as a decentralized system, thereby avoiding the limitations and risks associated with centralized architectures, such as data security vulnerabilities, scalability constraints, and privacy concerns.
+
+\section{Constraints and Assumptions}
+The system operates under the assumption that the user authentication phase is not the primary focus of the project. Therefore, it is sufficient to implement a basic mechanism to identify users and grant them access to their respective privileges. A key requirement is that this method be easily replaceable or upgradable, allowing for future integration of more sophisticated authentication solutions.
+
+As the system is intended to serve as a \Gls{web3} extension for traditional \acrshort{lms} platforms, a critical constraint is that all on-chain operations must remain within acceptable gas limits. This ensures that blockchain transactions linger affordable and practical for real-world use.
+
+It is also assumed that universities and their technical staff possess a fundamental understanding of blockchain technologies, including key concepts such as wallets and transaction. This baseline knowledge is essential for effectively utilize the \acrshort{api} provided by \acrshort{ew}.
