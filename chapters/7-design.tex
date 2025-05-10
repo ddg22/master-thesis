@@ -7,9 +7,9 @@ and more in detail in \cref{fig:fullArchDiag}:
     \item A \textit{\acrfull{sdk}} designed for universities to interact with the \acrshort{ew} system.
     \item An external \textit{decentralized storage system} used to store and retrieve certification files (see \cref{sec:decStorageDesgn}).
 \end{itemize}
-\begin{figure}[htpb]
+\begin{figure}
   \centering
-  \includegraphics[width=0.5\textwidth]{figures/Architecture diagram basic.pdf}
+  \includegraphics[width=0.6\textwidth]{figures/Architecture diagram basic.pdf}
   \caption[System basic architecture diagram]{The diagram shows the base architecture of the \acrlong{ew} system.}
   \label{fig:baseArchDiag}
 \end{figure}
@@ -20,9 +20,9 @@ Since the focus of our work is on the interaction of universities and students w
 
 A more detailed analysis of each component is provided in the following sections.
 
-\begin{figure}[htpb]
+\begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{figures/Architecture diagram complete.pdf}
+  \includegraphics[width=0.8\textwidth]{figures/Architecture diagram complete.pdf}
   \caption[System architecture diagram]{The diagram shows the entire architecture of the \acrlong{ew} system.}
   \label{fig:fullArchDiag}
 \end{figure}
@@ -55,5 +55,112 @@ Academic certifies, and official documents more broadly, are legal artifacts tha
 
 While \acrshort{ipfs} offers strong immutability and verifiability, it lacks built-in access control. In the context of our system, we assume that certificates are publicly accessible documents. Consequently, any part in possession of a file's \acrshort{cid} can retrieve it via the public gateway. However, if access control becomes a requirement, there are several strategies to address this limitation \cite{barbaraanrealaura2021datapersistence}. One option is to encrypt files before uploading them to \acrshort{ipfs}, such that only authorized components within our system can decrypt them. Another approach is to use a private \acrshort{ipfs} network, where access can be restricted to approved entities. The trade-offs and potential implications of such private deployment will be discussed in the FUTURE WORK CHAPTER.
 
-\section{\acrshort{cli}}
+\section{CLI}
 \label{sec:cliDesign}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/CLI use case diagram.pdf}
+  \caption[Use case diagram representing the functionalities provided by the \acrshort{cli}]{The diagram shows the functionalities provided by the \acrshort{cli}.}
+  \label{fig:useCaseCli}
+\end{figure}
+To interact with \acrshort{ew}, universities are expected to integrate the \acrshort{sdk} into their existing \acrshort{lms}. However, given that this is a testing environment, smaller and simpler than a real-world deployment, we developed a minimal \acrlong{cli} to simulate the interaction between a university's system and our academic register.
+
+\subsection{Different UI possibilities}
+We opted to implement a CLI rather than a web application or desktop GUI. This decision allowed for faster development and enabled us to focus on the core functionalities of the \acrshort{sdk}, the blockchain logic, and the browser extension, without being burdened by graphical or \acrshort{ux} concerns.
+
+\subsection{Visual aspect}
+\cref{fig:clifigs} illustrates the visual aspects of the \acrshort{cli}. In \cref{sfig:cliDesign1}, users can navigate through a sliding menu offering various options. When input is required, the interface prompts the user for the necessary information and provides visual feedback upon completion of the operation (\cref{sfig:cliDesign2}).The \acrshort{cli} leverages the \textit{inquirer} library to manage user interactions and uses \textit{ora} to display feedback. Specifically, \textit{ora} is responsible for showing success and error messages, as well as animated text with spinners to indicate ongoing operations.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/CLI screen 1.png}
+        \caption{Sliding menu}
+        \label{sfig:cliDesign1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.50\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/CLI screen 2.png}
+        \caption{User input and visual feedbacks}
+        \label{sfig:cliDesign2}
+    \end{subfigure}
+    \caption{A figure showing different aspects of the \acrshort{cli} interface}
+    \label{fig:clifigs}
+\end{figure}
+
+\subsection{Functionalities}
+The \acrshort{cli} exposes all the functionalities outlined in \cref{fig:useCaseCli}. Users can:
+\begin{itemize}
+    \item Submit a request to register a university in the \acrshort{ew} system.
+    \item Register a new student.
+    \item Retrieve a student’s personal details.
+    \item Retrieve a student’s details and academic results.
+    \item Enrol a student in a new course.
+    \item Evaluate a student.
+    \item Request permissions from a student.
+    \item Verify existing permissions.
+\end{itemize}
+Additionally, the \acrshort{cli} provides options to change the current university and exit the program.
+
+\subsubsection{Testing environment initialization}
+Before performing any operation, the \acrshort{cli} must initialize a local blockchain test network by deploying the following smart contracts:
+\begin{itemize}
+    \item \textit{EntryPoint}
+    \item \textit{StudentDeployer}
+    \item \textit{UniversityDeployer}
+    \item \textit{Paymaster}
+    \item \textit{StudentsRegister}
+\end{itemize}
+The \textit{Paymaster} contract then must also be funded to sponsor transactions on behalf of users.
+
+In public testnets or in production networks, this step would be unnecessary, as the contracts would already be deployed. Their addresses would be hardcoded in the \acrshort{cli}, \acrshort{sdk} and browser extension.
+
+\subsubsection{University registration}
+\label{sssec:applyEw}
+To apply to the \acrshort{ew} system, a university must provide its name, country, and short name. Upon completion, it receives the private key of the wallet that owns its smart account. This key is used by the \acrshort{cli} to generate the university's \acrlong{eth} wallet, which is then stored as the current active university.
+
+In a real \acrshort{lms}, the private key must be securely stored and used to initialize the wallet and use the \acrshort{sdk}. 
+
+To interact with the \textit{EntryPoint}  contract in the local testnet, the \acrshort{cli} also funds the university's \acrshort{eth} wallet. In public or production networks, this is not necessary, as the bundler pays the transaction fees and is reimbursed by the \textit{Paymaster}.
+
+\subsubsection{Register a new student}
+To register a student, the  university provides their name, surname, date of birth, place of birth and country of birth. The \acrshort{cli} then calls the \acrshort{sdk} to create the student's academic wallet and credentials, which are returned to the university (\cref{sfig:cliDesign2}).
+
+The academic wallet address uniquely identifies the student and must be stored by the university, as it is required for all future interactions. 
+
+As discussed in the CONTRACT SECTION, universities are responsible for registering students to decentralize the validation process. Since universities already verify student applications, they can provide verified data to the system, avoiding centralization and overloading the system administrator.
+
+The \acrshort{cli} also funds the student's \acrlong{eth} wallet  for local testing. The wallet address is obtained from the login credentials, as done in the browser extension (see BROWSER EXTENSION SECTION).
+
+\subsubsection{Student Information Retrieval}
+To retrieve a student's personal information or full academic record, university must provide the student's academic wallet address. The \acrshort{cli} then returns the requested data.
+
+\subsubsection{Enrol and evaluate}
+To enrol or evaluate a student, the university must provide the academic wallet address and course code. Enrolment also requires the course name, number of \acrshort{ects} and degree course name (e.g., \textit{Master's in Computer Engineering}, or \textit{Bachelor's in Biology}). Evaluation requires the evaluation date and, optionally, the path to a certificate file. 
+
+Since the \acrshort{sdk} allows enrolment in or evaluation of multiple courses at once, the \acrshort{cli} also supports submitting multiple records in a single command.     
+
+\subsubsection{Permissions: Request and Verification}
+To access or modify student's academic records, the university must request permission. The \acrshort{cli} requires the student's wallet address and the type of permission (read or write). As in most systems, write permission implies read access.
+
+The \acrshort{cli} also includes an option to verify whether the university currently has read or write permission for a specific student.
+
+\subsubsection{Changing University and Exiting the \acrshort{cli}}
+These functionalities are unique to the \acrshort{cli} and are included for convenience. To change the active university, the user provides the private key of another registered university. To exit the \acrshort{cli}, the user selects the corresponding menu option.
+
+\subsubsection{Administrator Functionalities}
+The \acrshort{cli} also includes admin functionalities, to facilitate system testing. Specifically, the administrator can:
+\begin{itemize}
+    \item Review the information submitted in university registration request.
+    \item Approve and register universities in the system.
+\end{itemize}
+These functionalities are embedded within the university registration option. A university is automatically registered when its information is provided by the user during the registration process.
+
+\subsection{Data validation}
+All user input is validated using regular expressions and formatting rules. For instance, wallet addresses and private keys are validated based on length and structure\footnote{Private keys must start with \textit{0x} and be followed by 64 hexadecimal characters; addresses by 42.}. Strings are validated to fall within predefined length limits.
+
+Dates must follow the \textit{YYYY-MM-DD} format to avoid ambiguity and must be after January 1, 1970, as they are stored as Unix timestamps (unsigned integers). 
+
+\acrshort{ects} values are checked to ensure they are valid integers or floating-point numbers within acceptable limits. Since the smart contracts store \acrshort{ects} as integers scaled by 100 (to avoid the issue of Solidity with floating point numbers), the \acrshort{cli} ensures the values will not cause overflow during storage.
