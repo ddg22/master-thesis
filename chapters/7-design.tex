@@ -18,7 +18,7 @@ Since the focus of our work is on the interaction of universities and students w
 
 A more detailed analysis of each component is provided in the following sections.
 
-\begin{figure}
+\begin{figure}[htpb]
   \centering
   \includegraphics[width=0.8\textwidth]{figures/Architecture diagram complete.pdf}
   \caption[System architecture diagram]{Complete architecture of the \acrlong{ew} system}
@@ -27,10 +27,10 @@ A more detailed analysis of each component is provided in the following sections
 
 \section{Smart Contracts}
 \label{sec:smartContractsDesign}
-In this section we outline the design choices behind the development of the smart contracts. They are the core logic of the \acrshort{ew} system, enabling secure and decentralized management. Leveraging the blockchain principles, such as wallets and transaction, and more sophisticated features, like access control, they manage students and universities account creation and permission, academic records access and management, and data retrieving. The browser extension, as well as the \acrshort{sdk}, interact with them to provide users with the required functionalities, using TypeScript libraries, like \textit{ethers}\footnote{\url{https://docs.ethers.org/v6}}, to easily access them.
+In this section we outline the design choices behind the development of the smart contracts. They are the core logic of the \acrshort{ew} system, enabling secure and decentralized management. Leveraging the blockchain principles, such as wallets and transaction, and more sophisticated features, like access control, they manage students and universities accounts creation and permissions, academic records access and management, and data retrieving. The browser extension, as well as the \acrshort{sdk}, interact with them to provide users with the required functionalities, using TypeScript libraries, like \textit{ethers}\footnote{\url{https://docs.ethers.org/v6}}, to easily access them.
 
 \subsection{Blockchain Platform and Technologies}
-The blockchain we chose to develop our system is \acrlong{eth}, a public blockchain that can rely on a large community and with different features that works well in an academic record system \cite{mustafa2024publiceduchain}\cite{yassynzhanbolatzhan2021verificationuniversitystudent}. We chose it because allows smart contract development and deployment with different languages. Another important feature of \acrlong{eth} is it is the base for several layer 2 blockchain technologies, which add various functionalities to the mainnet. Some example of layer 2 chain based on \acrlong{eth} are:
+The development of a blockchain based system starts from the choice of the chain that best fits the needs. The chain we chose is \acrlong{eth}, a public blockchain that can rely on a large community and with different features that works well in an academic record system \cite{mustafa2024publiceduchain}\cite{yassynzhanbolatzhan2021verificationuniversitystudent}. We chose it because it allows smart contract development and deployment with different languages, and it is the base for several layer 2 blockchain technologies, which add various functionalities to the mainnet. The availability of several chains with different characteristics on top of the main one, allows to develop an \acrlong{eth} smart contracts system, which then can be moved to a layer 2 chain to exploit its peculiarities with not so much effort. Some example of layer 2 chain solutions based on \acrlong{eth}, with their main features, are:
 
 \begin{itemize}
     \item Polygon, which offers faster and cheaper transactions compared to the \acrlong{eth} mainnet.
@@ -41,15 +41,13 @@ The blockchain we chose to develop our system is \acrlong{eth}, a public blockch
 \end{itemize}
 See \cref{chap:layer2links} for the links to all the layer 2 chains.
 
-We was interested in this feature because it allows to develop an \acrlong{eth} mainnet based smart contracts system, which then can be moved to a layer 2 chain to exploit their peculiarities, with not so much effort.
-
-Chosen the chain, we decided to opt for Solidity\footnote{\url{https://soliditylang.org/}} as language to develop our smart contracts. Solidity is an object oriented programming languages, developed to write smart contracts to run on \acrlong{eth} and its \acrshort{evm}, and with some influences from C++, JavaScript and Python\footnote{\url{https://github.com/ethereum/solidity/blob/develop/docs/index.rst}}. It is the most used to write code on the \acrlong{eth} chain, and it can count on a really big community of developer, that helps in finding content on developers forum. We also had a small experience in developing smart contracts in Solidity, therefore, considering also all the reasons presented before, it was the more natural choice.
+Chosen the chain, we decided to opt for Solidity\footnote{\url{https://soliditylang.org/}} as language to develop our smart contracts. Solidity is an object oriented programming languages, developed to write smart contracts to run on \acrlong{eth} and its \acrshort{evm}, influenced by C++, JavaScript and Python\footnote{\url{https://github.com/ethereum/solidity/blob/develop/docs/index.rst}}. It is the most used language to write code on the \acrlong{eth} chain, and it can count on a really big community of developer. We also had a small experience in developing smart contracts in Solidity, therefore, considering also all the reasons presented before, it was the more natural choice.
 
 \subsection{Architecture}
 \begin{figure}
   \centering
   \includegraphics[width=1\textwidth]{figures/Contracts class diagram.pdf}
-  \caption[Class diagram showing the smart contracts architecture.]{Smart contracts class diagram}
+  \caption[Smart contracts architecture class diagram]{Class diagram representing smart contracts architecture}
   \label{fig:contractsClass}
 \end{figure}
 
@@ -72,9 +70,20 @@ It exploits also other four contract, the green ones in \cref{fig:contractsClass
     \item \textit{BasePaymaster}: abstract contract that implements the essential structure of a paymaster able to fund users transactions.  
 \end{enumerate}
 
+\subsection{SmartAccount}
 
 \subsubsection{Student}
 \label{sssec:studentContract}
+
+\subsection{University}
+
+\subsection{StudentDeployer}
+
+\subsection{UniversityDeployer}
+
+\subsection{StudentsRegister}
+
+\subsection{Paymaster}
 
 \section{Browser Extension}
 \label{sec:browserExtensionDesign}
@@ -109,7 +118,7 @@ While \acrshort{ipfs} offers strong immutability and verifiability, it lacks bui
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{figures/CLI use case diagram.pdf}
-  \caption[Use case diagram representing the functionalities provided by the \acrshort{cli}.]{\acrshort{cli} functionalities}
+  \caption[\acrshort{cli} use case diagram]{Use case diagram representing the functionalities provided by the \acrshort{cli}.}
   \label{fig:useCaseCli}
 \end{figure}
 This section describes the testing tool developed to evaluate the use of the \acrshort{sdk}. In a real-world deployment, universities are expected to integrate the \acrshort{sdk} into their existing \acrshort{lms} to interact with \acrlong{ew}. However, given that this is a testing environment, smaller and simpler than a real-world deployment, we developed a minimal \acrlong{cli} to simulate the interaction between a university's system and our academic register. We opted to implement a CLI rather than a web application or desktop GUI and this decision allowed for faster development, enabling us to focus on the core functionalities of the \acrshort{sdk}, the blockchain logic, and the browser extension, without introducing additional complexity related to graphical or \acrfull{ux} design.
@@ -131,7 +140,7 @@ This section describes the testing tool developed to evaluate the use of the \ac
         \caption{User input and visual feedbacks}
         \label{sfig:cliDesign2}
     \end{subfigure}
-    \caption[Group of images showing different aspects of the \acrshort{cli} interface.]{Different aspects of the \acrshort{cli} interface}
+    \caption[Different aspects of the \acrshort{cli} interface.]{Snapshots of the \acrshort{cli} interface}
     \label{fig:clifigs}
 \end{figure}
 
