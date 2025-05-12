@@ -59,17 +59,17 @@ Leveraging the class diagram shown in \cref{fig:contractsClass}, we are now goin
     \item \textit{SmartAccount}: it defines the structure of a smart account for the account abstraction protocol.
     \item \textit{Student}: smart contract that represents a student.
     \item \textit{University}: used for universities.
-    \item \textit{StudentDeployer}: as its name said, it is responsible for the deployment of each \textit{Student} contract.
+    \item \textit{StudentDeployer}: as its name says, it is responsible for the deployment of each \textit{Student} contract.
     \item \textit{UniversityDeployer}: like \textit{StudentDeployer}, it deploys \textit{University} smart contracts.
     \item \textit{StudentsRegister}: it manages and stores the information of students and universities.
     \item \textit{Paymaster}: it funds the transactions of both universities and students.
 \end{enumerate}
-It exploits also other four contract, the green ones in \cref{fig:contractsClass}, taken from contracts libraries such as \textit{openzeppelin}\footnote{https://docs.openzeppelin.com/}:
+It exploits also other four contract, the green ones in \cref{fig:contractsClass}, taken from contracts libraries, such as \textit{openzeppelin}:
 \begin{enumerate}
-    \item \textit{EntryPoint}:
-    \item \textit{AccessControl}:
-    \item \textit{BaseAccount}:
-    \item \textit{BasePaymaster}:
+    \item \textit{EntryPoint}: singleton contract that receives transactions from smart account, then verifies and executes user operations embedded in them.
+    \item \textit{AccessControl}\footnote{\url{https://docs.openzeppelin.com/contracts/5.x/access-control}}: abstract contract that provides a full access control system.
+    \item \textit{BaseAccount}: abstract contract that defines the basic behaviour of a smart account in the account abstraction protocol.
+    \item \textit{BasePaymaster}: abstract contract that implements the essential structure of a paymaster able to fund users transactions.  
 \end{enumerate}
 
 
