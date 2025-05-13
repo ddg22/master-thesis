@@ -66,24 +66,25 @@ It exploits also other four contract, the green ones in \cref{fig:contractsClass
 \begin{enumerate}
     \item \textit{EntryPoint}: singleton contract that receives transactions from smart account, then verifies and executes user operations embedded in them.
     \item \textit{AccessControl}\footnote{\url{https://docs.openzeppelin.com/contracts/5.x/access-control}}: abstract contract that provides a full access control system.
-    \item \textit{BaseAccount}: abstract contract that defines the basic behaviour of a smart account in the account abstraction protocol.
+    \item \textit{BaseAccount}: abstract contract that defines the basic behaviours of a smart account in the account abstraction protocol.
     \item \textit{BasePaymaster}: abstract contract that implements the essential structure of a paymaster able to fund users transactions.  
 \end{enumerate}
 
-\subsection{SmartAccount}
+\subsubsection{SmartAccount}
 
 \subsubsection{Student}
 \label{sssec:studentContract}
 
-\subsection{University}
+\subsubsection{University}
 
-\subsection{StudentDeployer}
+\subsubsection{StudentDeployer}
 
-\subsection{UniversityDeployer}
+\subsubsection{UniversityDeployer}
 
-\subsection{StudentsRegister}
+\subsubsection{StudentsRegister}
 
 \subsection{Paymaster}
+One of the main feature of our system is that for users, universities and students, the usage of the blockchain is almost transparent: students do not use wallets and do not perform transactions by themselves, universities only need to know the private key of the \acrlong{eth} wallet which owns their academic wallet, in order to access it. This is possible thanks also to the Paymaster, a smart contract deployed in the chain and in charge of sponsor users transactions.
 
 \section{Browser Extension}
 \label{sec:browserExtensionDesign}
@@ -102,7 +103,7 @@ We chose a decentralized storage system over traditional local or cloud-based so
 To fully leverage \acrshort{ipfs}, we integrated Filebase\footnote{\url{https://filebase.com}}, a third-party pinning service. Pinning refers to the act of instructing a node to keep a copy of a file permanently, preventing it from being removed during garbage collection. Without Filebase, we would have needed to run our own local \acrshort{ipfs} node and manage file pinning manually, an approach that introduces instead complexity, higher maintenance costs, and reduced data availability in a testing system like ours. In contrast, Filebase handles node operation and file pinning, offering an accessible solution thorough its AWS S3-compatible \acrshort{api}, which simplifies file uploads to the peer-to-peer network. Notably, Filebase also provides a free tier allowing up to 5 GB of storage, which is sufficient for our needs. This is an advantage over other pinning solutions such as Web3.Storage, which lacks a fully free plan, or Pinata\footnote{\url{https://pinata.cloud}}, which offers more limited options.
 
 \subsection{Integration in the system}
-As shown in \cref{fig:fullArchDiag}, both the browser extension and the \acrshort{sdk} interact with the storage system. The browser extension retrieves certificate associated with academic records using the official \acrshort{ipfs} public gateway. It presents students with a direct link to each certificate, composed by the gateway's base \acrshort{url} followed by the file's \acrfull{cid} on the \acrshort{ipfs} network. The \acrshort{cid} of each document is stored on-chain within the student's academic wallet, alongside other record information such as the course name. This enables students to view and download their certificates from a standard web interface.
+As shown in \cref{fig:fullArchDiag}, both the browser extension and the \acrshort{sdk} interact with the storage system. The browser extension retrieves certificate associated with academic records using the official \acrshort{ipfs} public gateway. It presents students with a direct link to each certificate, composed by the gateway's base \acrshort{url} followed by the file's \acrfull{cid} on the \acrshort{ipfs} network. The \acrshort{cid} of each document is stored on-chain within the student's academic wallet, alongside other record information such as the course name (see \cref{sssec:studentContract}). This enables students to view and download their certificates from a standard web interface.
 
 % TODO: Add photo of the extension where you can see the link of a certification
 Similarly, the \acrshort{sdk} uses the same mechanism to retrieve certificates on behalf of universities. When uploading a file, however, the \acrshort{sdk} interacts directly with Filebase to ensure the file is pinned and hosted by an active node. The \acrshort{sdk} receives the document from the university, then uses the AWS S3-compatible \acrshort{api} to upload it. The \acrshort{api} requires the key associated with the pinning account (managed by the \acrshort{ew} system administrator) and the file itself. In return, it provides the \acrshort{cid}, which is then stored in the academic record.
