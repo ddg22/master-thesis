@@ -1,5 +1,18 @@
 \documentclass[british,titlepage]{ntnuthesis}
 
+\usepackage{listings-solidity} % copy listings-solidity.sty to your project
+
+\usepackage{xcolor}
+\definecolor{verylightgray}{rgb}{.97,.97,.97}
+
+\lstset{ % define general preferences
+	backgroundcolor=\color{verylightgray},
+	extendedchars=true,
+    showstringspaces=false,
+    showspaces=false,
+    tabsize=4,
+}
+
 \title{EduWallet: A Blockchain-Enabled Digital Wallet for Managing University Course Credits}
 \shorttitle{EduWallet}
 \author{Diego Da Giau}
@@ -36,6 +49,6 @@
 \appendix
 \input{appendices/gitHubRepo.tex}
 \input{appendices/figma}
-\input{appendices/layer2}
+\input{appendices/basePaymaster}
 
 \end{document}

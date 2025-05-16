@@ -1,13 +1,15 @@
 \chapter{Requirements}
 \label{chap:requirements}
-In this chapter, our aim is to describe both the functional and non-functional requirements that guided us in the development of the comprehensive academic wallet system. These requirements are summarized in \cref{tab:funcReq} and \cref{tab:nonFuncReq}, respectively. They were derived from an in-depth analysis of the use cases, as well as the specific needs and demands of the various stakeholders engaged with the system. This stakeholder group includes the administrator of the \acrfull{ew} system, students, and universities.
+In this chapter, our aim is to describe both the functional and non-functional requirements that guided us in the development of the comprehensive academic wallets system. These requirements are summarized in \cref{tab:funcReq} and \cref{tab:nonFuncReq}, respectively. They were derived from an in-depth analysis of the use cases, as well as the specific needs and demands of the various stakeholders engaged with the system. This stakeholder group includes the administrator of the \acrfull{ew} system, students, and universities.
 
 \section{Functional Requirements}
-The primary functional requirement for the system administrator is the ability to register universities following their subscription request. This process must be preceded by a thorough verification of the provided data, in order to ensure that only trusted institutions are granted access to the system. The validation step is fundamental for the system, universities are the entities entitled to register new students in the academic record, therefore malicious actors authorized to access can compromise the system security and the veracity of its data.
+The primary functional requirement for the system administrator is the ability to register universities following their subscription request. This process must be preceded by a thorough verification of the provided data, in order to ensure that only trusted institutions are granted access to the system. The validation step is fundamental, as universities are the entities entitled to register new students in the academic record. Consequently, if malicious actors are authorized to access the system, its security and the veracity of the stored data could be compromised.
 
-Regarding universities, they must be able to initiate a subscription by submitting their institutional information, including name and country. Upon approval, they require secure authentication mechanisms to access the system and exercise their privileges. Authentication is a critical precondition for nearly all operations, including the viewing and modification of students' data and academic records. These operations may involve retrieving the list of courses attended by a student or issuing a new certification. Moreover, authenticated universities are responsible for creating \acrfull{sw} for newly enrolled students who do not yet posses one, as well as requesting permission from students to access their existing wallets. Delegating the creation of student \acrshort{sw} to universities accelerates the data verification process, as the system relies on the institution's trustworthiness to validate student information. Academic record are strictly personal data, which must be treated with extremely caution. For this reason, without proper authentication, access to student, whether for viewing or modification, must be strictly restricted. Finally, since blockchain technologies can be difficult to interact with, due to their being rather recent technologies, the system should also expose comprehensive \acrfull{api} endpoints. These can support seamless integration with university \acrfull{lms}, enabling them to interact with and utilize \acrlong{ew} full range of features.
+Regarding universities, they must be able to initiate a subscription by submitting their institutional information, including name and country. Upon approval, they require secure authentication mechanisms to access the system and exercise their privileges. Authentication is a critical precondition for nearly all operations, including the viewing and modification of students' data and academic records. These operations may involve retrieving the list of courses attended by a student or issuing a new certification. Furthermore, authenticated universities are responsible for creating \acrfull{sw} for newly enrolled students who do not yet posses one, as well as requesting permission from students to access their existing wallets. Delegating the creation of student \acrshort{sw} to universities accelerates the data verification process, as the system relies on the institution's trustworthiness to validate student information. Academic records are strictly personal data and must be handled with extreme caution. For this reason, without proper authentication, access to student, whether for viewing or modification, must be strictly restricted. 
+Finally, since blockchain technologies can be difficult to interact with, due to their relatively recent development, the system should expose comprehensive \acrfull{api} endpoints. These can support seamless integration with university \acrfull{lms}, enabling them to interact with and utilize the full rage of fratures offered by \acrlong{ew}.
 
-Students' functional requirements are closely aligned with the core principles of \Gls{web3} ownership: students must retain full control over their academic wallets. Consequentially, the \acrshort{ew} system must enable students to securely authenticate and access their \acrshort{sw} via a web interface, which also provides the ability to view and administer their data. A web application avoid the need to install new dedicated software on devices and guarantees a smoother multi device usage. Once authenticated, students should be able to grant universities explicit permissions to access their records, with fine-grained control over viewing and modification rights. The distinction between these two access type is useful to well manage different situations. For example, in a situation where a student applies for an exchange program, the host university should only be able to access the student's academic records, and not to create new ones.
+Students' functional requirements are closely aligned with the core principles of \Gls{web3} ownership: students must retain full control over their academic wallets. Consequentially, the \acrshort{ew} system must enable students to securely authenticate and access their \acrshort{sw} via a web interface, which also provides the ability to view and administer their data. A web application eliminates the need to install dedicated software on user devices and ensures a smoother multi-device experience.
+Once authenticated, students should be able to grant universities explicit permissions to access their records, with fine-grained control over viewing and modification rights. This distinction is essential to manage different scenarios appropriately. For example, in the context of an exchange program, the host university should only be allowed to access a student's academic records, and not modify them.
 
 \begin{table}
 \centering
@@ -17,23 +19,23 @@ Students' functional requirements are closely aligned with the core principles o
 \hline
 \multicolumn{2}{|c|}{\textbf{System Administration}} \\
 \hline
-FR1 & Allow the system administrator to verify and approve universities requesting to join the system. \\
+FR1 & Allow the system administrator to verify and approve universities requesting access to the \acrlong{ew} system. \\
 \hline
 \multicolumn{2}{|c|}{\textbf{University}} \\
 \hline
 FR2 & Enable universities to register and subscribe to the system. \\
-FR3 & Provide secure authentication mechanisms for universities. \\
-FR4 & Allow universities to create new smart wallets for students upon enrollment. \\
-FR5 & Enable universities to issue academic records to students' smart wallets. \\
-FR6 & Implement authorization controls to ensure only permitted universities can modify specific academic records. \\
-FR7 & Provide a mechanism for universities to request permission from students to access or modify their academic records. \\
-FR8 & Provide APIs for universities to integrate EduWallet with existing student information systems. \\
+FR3 & Provide secure authentication mechanisms for universities to access the platform. \\
+FR4 & Allow universities to create new smart contract wallets for students upon enrolment. \\
+FR5 & Enable universities to read from and issue academic records to students' smart wallets. \\
+FR6 & Implement authorization controls to ensure that only permitted universities can access or modify specific academic records. \\
+FR7 & Provide a mechanism for universities to request and obtain permission from students before accessing or modifying their academic records. \\
+FR8 & Provide APIs that allow universities to integrate the \acrlong{ew} system with their existing \acrlong{lms}. \\
 \hline
 \multicolumn{2}{|c|}{\textbf{Student}} \\
 \hline
-FR9  & Students must own and manage their academic wallet. \\
+FR9  & Students must own and manage their academic smart wallets independently. \\
 FR10 & Enable students to securely authenticate and access their smart wallets. \\
-FR11 & Provide students with a web interface to view and manage their academic records. \\
+FR11 & Provide students with a web-based interface to view and manage their academic records. \\
 FR12 & Allow students to grant and revoke access permissions to their academic records for specific institutions. \\
 \hline
 \end{tabular}
@@ -45,15 +47,13 @@ In addition to the presented core features, the system must fulfil several non-f
 
 To preserve its independence, \acrshort{ew} must avoid reliance on third-party cryptocurrency wallets, such as MetaMask or Coinbase, as well as on proprietary technologies. These constraints are essential to prevent external dependencies that could compromise the system’s availability or security due to changes in external policies or services.
 
-A key consideration for blockchain-based systems is the cost associated with on-chain storage operations. The current storage cost on different blockchain is % TODO: Add cost of storage EUR/MB if possible
-
-To address this, the system must minimize blockchain storage usage by storing only essential data directly on-chain, while leveraging alternative technologies to manage and store files.
+A key consideration for blockchain-based systems is the cost associated with on-chain storage operations \cite{surya2024designdecentralizedidentity}. To address this, the system must minimize blockchain storage usage by storing only essential data directly on-chain, while leveraging alternative technologies to manage and store files.
 
 Academic records, by nature, must be verifiable and resistant to unauthorized modifications. The system must ensure that these records are temper-proof and can be verified by third parties at any time, in alignment with the integrity requirements of academic data.
 
-Simplicity and ease of use are also critical. Since our target users are not PER FORZA experts in blockchain and, generically, in computer technologies, the system's focus is to provide users with an intuitive means to access and manage academic data. As such, both universities and students must be supported with a user-friendly interface that facilitates seamless interaction with the \acrshort{ew} platform.
+Simplicity and ease of use are also critical. Since our target users are not necessary experts in blockchain or, more generally, in computer technologies, the system must offer an intuitive means of accessing and managing academic data. As such, both universities and students must be supported with a user-friendly interface that facilitates seamless interaction with the \acrshort{ew} platform.
 
-Finally, the adoption of blockchain technologies is driven by the desire to follow the defining characteristic of \Gls{web3} applications: decentralization. \acrshort{ew} should be designed to operate as a decentralized system, thereby avoiding the limitations and risks associated with centralized architectures, such as data security vulnerabilities, scalability constraints, and privacy concerns. % TODO: talk about Web3 and the advantages of decentralized systems over centralized ones.
+Finally, the adoption of blockchain technologies is driven by the desire to embrace the defining characteristic of \Gls{web3} applications: decentralization. \acrshort{ew} should be designed to operate as a decentralized system, thereby avoiding the limitations and risks associated with centralized architectures, such as data security vulnerabilities, scalability constraints, and privacy concerns. % TODO: talk about Web3 and the advantages of decentralized systems over centralized ones.
 
 \begin{table}
 \centering
@@ -61,12 +61,12 @@ Finally, the adoption of blockchain technologies is driven by the desire to foll
 \label{tab:nonFuncReq}
 \begin{tabular}{|p{1.0cm}|p{11cm}|}
 \hline
-NFR1 & Operate without dependency on third-party wallets like MetaMask. \\
-NFR2 & Operate with as few third-party technologies as possible. \\
-NFR3 & Minimize on-chain storage costs by storing only data and no files. \\
-NFR4 & Ensure academic records are tamper-proof and verifiable by third parties. \\
-NFR5 & Provide a user-friendly interface for both students and universities. \\
-NFR6 & The system should be as decentralized as possible. \\
+NFR1 & The system shall operate without dependency on third-party wallet providers such as MetaMask. \\
+NFR2 & The system shall minimize reliance on third-party technologies to enhance security and maintain control. \\
+NFR3 & On-chain storage costs shall be minimized by storing only essential data, excluding large files. \\
+NFR4 & Academic records shall be tamper-proof and verifiable by authorized third parties. \\
+NFR5 & The system shall provide an intuitive and user-friendly interface for both students and university administrators. \\
+NFR6 & The system architecture shall be designed to maximize decentralization wherever feasible. \\
 \hline
 \end{tabular}
 \end{table}
