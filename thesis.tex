@@ -1,6 +1,6 @@
 \documentclass[british,titlepage]{ntnuthesis}
 
-\usepackage{listings-solidity} % copy listings-solidity.sty to your project
+\usepackage{listings-solidity}
 
 \usepackage{xcolor}
 \definecolor{verylightgray}{rgb}{.97,.97,.97}
@@ -11,6 +11,7 @@
     showstringspaces=false,
     showspaces=false,
     tabsize=4,
+    %breaklines=true,
 }
 
 \title{EduWallet: A Blockchain-Enabled Digital Wallet for Managing University Course Credits}
@@ -51,6 +52,7 @@
 \appendix
 \input{appendices/gitHubRepo.tex}
 \input{appendices/figma}
+\input{appendices/baseAccount}
 \input{appendices/basePaymaster}
 
 \end{document}
