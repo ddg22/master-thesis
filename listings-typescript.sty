@@ -1,0 +1,20 @@
+\RequirePackage{listings}
+
+% Define TypeScript language
+\lstdefinelanguage{TypeScript}{
+  keywords=[1]{break, case, catch, class, const, continue, debugger, default, delete, do, else, enum, export, extends, finally, for, from, function, if, import, in, instanceof, let, new, return, super, switch, this, throw, try, typeof, var, void, while, with, yield, async, await, static, as},
+  keywordstyle=[1]\color{blue}\bfseries,
+  keywords=[2]{number, boolean, string, symbol, bigint, any, unknown, never, undefined, null, object, void},
+  keywordstyle=[2]\color{teal}\bfseries,
+  keywords=[3]{interface, implements, private, protected, public, readonly, abstract, declare, namespace, module, type, keyof, infer, is, satisfies, override},
+  keywordstyle=[3]\color{violet}\bfseries,
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{gray}\ttfamily,
+  stringstyle=\color{orange!70!black}\ttfamily,
+  morestring=[b]',
+  morestring=[b]",
+  morestring=[b]`,
+  identifierstyle=\color{black},
+}

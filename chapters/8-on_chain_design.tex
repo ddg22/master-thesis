@@ -39,7 +39,8 @@ The development of a blockchain-based system begins with the selections of a sui
 For the implementation, we selected Solidity\footnote{\url{https://soliditylang.org/}} as the programming language. Solidity is an object-oriented language, designed specifically for writing smart contracts on \acrlong{eth} and the \acrshort{evm}, influenced by C++, JavaScript and Python\footnote{\url{https://github.com/ethereum/solidity/blob/develop/docs/index.rst}}. It is the most widely adopted language in the \acrlong{eth} ecosystem, supported by and active and large developer community. Given our prior experience with Solidity, this choice was natural and well-suited to our objectives.
 
 \subsection{Account Abstraction}
-One of the most significant obstacles to the widespread adoption of blockchain technologies, and \gls{web3} applications in general, is the complexity involved in interacting with the blockchain. To perform on-chain operations, users are typically required to create and manage cryptocurrencies wallets (\acrfull{eoa}), fund them with tokens (e.g., Bitcoin or \acrlong{eth}), and only then are they able to access and utilize decentralized platforms. During the design of the system, we aimed to eliminate this burden for users, in order to streamline the interactions among \acrlong{ew}, universities and students, thereby addressing \textit{NFR 5} in \cref{tab:nonFuncReq}. These considerations motivated the adoption of account abstraction within the system.
+\label{ssec:accountAbstraction}
+One of the most significant obstacles to the widespread adoption of blockchain technologies, and Web3 applications in general, is the complexity involved in interacting with the blockchain. To perform on-chain operations, users are typically required to create and manage cryptocurrencies wallets (\acrfull{eoa}), fund them with tokens (e.g., Bitcoin or \acrlong{eth}), and only then are they able to access and utilize decentralized platforms. During the design of the system, we aimed to eliminate this burden for users, in order to streamline the interactions among \acrlong{ew}, universities and students, thereby addressing \textit{NFR 5} in \cref{tab:nonFuncReq}. These considerations motivated the adoption of account abstraction within the system.
 
 \begin{figure}
   \centering
@@ -66,6 +67,7 @@ In our local test environment, where no public bundler is available, UserOperati
 % SMART ACCOUNT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{SmartAccount}
+\label{sec:smartAccountDesign}
 Depicted in \cref{fig:smartAccountContractClass}, \textit{SmartAccount} contract serves as an abstract base for all \acrlong{sca}s in the account-abstraction layer of the \acrlong{ew} system. Both University and Student contracts inherit from SmartAccount, which in turn extends BaseAccount, an abstract contract supplied by the ERC-4337 standard. BaseAccount implements core ERC-4337 logic, including support for both single and batched UserOperations and a mechanism to refund the EntryPoint for gas expenditures incurred during transaction execution.
 
 \begin{figure}
@@ -78,7 +80,7 @@ Depicted in \cref{fig:smartAccountContractClass}, \textit{SmartAccount} contract
 SmartAccount boosts these capabilities with two key features:
 \begin{itemize}
     \item \textbf{Validate UserOperation Signature}: Upon receiving a signed UserOperation, the contract verifies that the signature originates from owner of the \acrshort{sca}. The owner is specified when the contract which implements SmartAccount is deployed by providing the address to its constructor. Once validated, the account can perform the specified operations by leveraging the execution routines provided BaseAccount.
-    \item \textbf{Execute Read-Only Function}: To allow gasless access to view (read-only) functions that are permissioned in our system, the contract offers a dedicated function for executing such calls via the \acrshort{sca}. This avoids the need for standard UserOperations execution, and their associated gas costs, when users only require data retrieval. These view calls are performed by providing SmartAccount the address of the target contract and the encoded function data (call data) to send to it (i.e., the function signature and parameters in encoded form).
+    \item \textbf{Execute Read-Only Function}: To allow gasless access to view (read-only) functions that are permissioned in our system, the contract offers a dedicated function, restricted to only the owner of the account, for executing such calls via the \acrshort{sca}. This avoids the need for standard UserOperations execution, and their associated gas costs, when users only require data retrieval. These view calls are performed by providing SmartAccount the address of the target contract and the encoded function data (call data) to send to it (i.e., the function signature and parameters in encoded form).
 \end{itemize}
 
 Moreover, because \acrlong{sca}s support customizable signature validation logic and decouple externally \acrshort{eoa}s from on-chain execution, SmartAccount can be readily adapted to integrate alternative authentication schemes.
