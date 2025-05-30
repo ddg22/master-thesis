@@ -71,7 +71,7 @@ The extension also supports permission management via the lock icon. In this int
 \begin{figure}
   \centering
   \includegraphics[width=0.45\textwidth]{figures/Permissions.png}
-  \caption[Browser extension permissions page]{Screenshot of the browser extension login window.}
+  \caption[Browser extension permissions page]{Screenshot of the extension permissions window.}
   \label{fig:permissionsExt}
 \end{figure}
 
@@ -184,7 +184,7 @@ When a university needs permission to read or write a student’s academic walle
 \subsubsection{Verify permissions}
 To verify existing permissions, the \acrshort{sdk} takes the university's \acrshort{eoa} wallet and the student's \acrshort{sca} address. It then executes a read-only operation via the university's smart account, targeting the student smart account. The student's \acrshort{sca} returns the granted permission type, or null if none is held. The \acrshort{sdk} forwards this result to the caller, using the appropriate TypeScript type.
 
-\subsection{Accessing On-Chain Functionalities}
+\subsection{Access On-Chain Functionalities}
 Since the \acrshort{sdk} adopts the same model as the browser extension to access on-chain functionalities, the \cref{ssec:extBlockchainInteraction} provides a thorough explanation of the different types of interactions, as well as the tools and libraries used to execute them.
 
 \subsection{Input Management}
