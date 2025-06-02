@@ -40,7 +40,7 @@ For the implementation, we selected Solidity\footnote{\url{https://soliditylang.
 
 \subsection{Account Abstraction}
 \label{ssec:accountAbstraction}
-One of the most significant obstacles to the widespread adoption of blockchain technologies, and Web3 applications in general, is the complexity involved in interacting with the blockchain. To perform on-chain operations, users are typically required to create and manage cryptocurrencies wallets (\acrfull{eoa}), fund them with tokens (e.g., Bitcoin or \acrlong{eth}), and only then are they able to access and utilize decentralized platforms. During the design of the system, we aimed to eliminate this burden for users, in order to streamline the interactions among \acrlong{ew}, universities and students, thereby addressing \textit{NFR 5} in \cref{tab:nonFuncReq}. These considerations motivated the adoption of account abstraction within the system.
+One of the most significant obstacles to the widespread adoption of blockchain technologies, and Web3 applications in general, is the complexity involved in interacting with the blockchain. To perform on-chain operations, users are typically required to create and manage cryptocurrencies wallets (\acrfull{eoa}), fund them with tokens (e.g., Bitcoin or \acrlong{eth}), and only then are they able to access and utilize decentralized platforms. During the design of the system, we aimed to eliminate this burden for users, in order to streamline the interactions among \acrlong{ew}, universities and students, thereby addressing \acrshort{nfr} 5 in \cref{tab:nonFuncReq}. These considerations motivated the adoption of account abstraction within the system.
 
 \begin{figure}
   \centering
@@ -50,9 +50,9 @@ One of the most significant obstacles to the widespread adoption of blockchain t
 \end{figure}
 
 ERC‑4337, introduced in September 2021 by Vitalik Buterin and others\cite{buterin2021erc}, defines account abstraction on Ethereum. It enables users to leverage \acrlong{sca} with custom logic as their primary on‑chain accounts, replacing traditional \acrshort{eoa}. User actions are encapsulated in pseudo‑transactions called \textit{UserOperations}, whose life cycle is illustrated in \cref{fig:accountAbstraction}. Each UserOperation may bundle multiple on‑chain actions, such as contract calls or token transfers, and includes all necessary execution data. When creating a UserOperation, the user specifies the target \acrshort{sca} and signs the operation to authorize both its execution and associated gas consumption.
-Signed UserOperations are submitted to a \gls{mempool}, where specialized nodes called bundlers collect and aggregate them into a single on‑chain transaction. This transaction is sent to an EntryPoint contract on Ethereum, which unpacks each UserOperation and dispatches it to the designated \acrshort{sca}. The \acrshort{sca} then executes the required actions and handles fee payments, effectively becoming the transaction sender.
+Signed UserOperations are submitted to a \gls{mempool}, where specialized nodes called bundlers collect and aggregate them into a single on‑chain transaction. This transaction is sent to an entry point contract on Ethereum, which unpacks each UserOperation and dispatches it to the designated \acrshort{sca}. The \acrlong{sca} then executes the required actions and handles fee payments, effectively becoming the transaction sender.
 
-A key feature of ERC‑4337 is the ability to designate a Paymaster, such as our system’s Paymaster contract, to sponsor gas fees on the user’s behalf. If the Paymaster approves, it covers the transaction costs, allowing users to interact with \acrlong{ew} without managing wallets or tokens directly.
+A key feature of ERC‑4337 is the ability to designate a paymaster, such as our system’s Paymaster contract, to sponsor gas fees on the user’s behalf. If the paymaster approves, it covers the transaction costs, allowing users to interact with \acrlong{ew} without managing wallets or tokens directly.
 
 This standard also introduces in \acrlong{eth} several notable features:
 \begin{itemize}
@@ -61,14 +61,14 @@ This standard also introduces in \acrlong{eth} several notable features:
     \item \textbf{Bundled Operations}: Users can combine multiple transactions into a single UserOperation, reducing the aggregate cost compared to separate transactions.
 \end{itemize}
 
-In our local test environment, where no public bundler is available, UserOperations are sent directly to the EntryPoint contract, which then forwards them to the corresponding \acrshort{sca} for execution.
+In our local test environment, where no public bundler is available, UserOperations are sent directly to the entry point contract, which then forwards them to the corresponding \acrshort{sca} for execution.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SMART ACCOUNT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{SmartAccount}
 \label{sec:smartAccountDesign}
-Depicted in \cref{fig:smartAccountContractClass}, \textit{SmartAccount} contract serves as an abstract base for all \acrlong{sca}s in the account-abstraction layer of the \acrlong{ew} system. Both University and Student contracts inherit from SmartAccount, which in turn extends BaseAccount, an abstract contract supplied by the ERC-4337 standard. BaseAccount implements core ERC-4337 logic, including support for both single and batched UserOperations and a mechanism to refund the EntryPoint for gas expenditures incurred during transaction execution.
+Depicted in \cref{fig:smartAccountContractClass}, \textit{SmartAccount} contract serves as an abstract base for all \acrlong{sca}s in the account-abstraction layer of the \acrlong{ew} system. Both University and Student contracts inherit from SmartAccount, which in turn extends BaseAccount, an abstract contract supplied by the ERC-4337 standard. BaseAccount implements core ERC-4337 logic, including support for both single and batched UserOperations and a mechanism to refund the entry point contract for gas expenditures incurred during transaction execution.
 
 \begin{figure}
   \centering
@@ -80,7 +80,7 @@ Depicted in \cref{fig:smartAccountContractClass}, \textit{SmartAccount} contract
 SmartAccount boosts these capabilities with two key features:
 \begin{itemize}
     \item \textbf{Validate UserOperation Signature}: Upon receiving a signed UserOperation, the contract verifies that the signature originates from owner of the \acrshort{sca}. The owner is specified when the contract which implements SmartAccount is deployed by providing the address to its constructor. Once validated, the account can perform the specified operations by leveraging the execution routines provided BaseAccount.
-    \item \textbf{Execute Read-Only Function}: To allow gasless access to view (read-only) functions that are permissioned in our system, the contract offers a dedicated function, restricted to only the owner of the account, for executing such calls via the \acrshort{sca}. This avoids the need for standard UserOperations execution, and their associated gas costs, when users only require data retrieval. These view calls are performed by providing SmartAccount the address of the target contract and the encoded function data (call data) to send to it (i.e., the function signature and parameters in encoded form).
+    \item \textbf{Execute Read-Only Function}: To allow gasless access to read-only (\textit{view}) functions that are permissioned in our system, the contract offers a dedicated method, restricted to only the owner of the account, for executing such calls via the \acrshort{sca}. This avoids the need for standard UserOperations execution, and their associated gas costs, when users only require data retrieval. These view calls are performed by providing SmartAccount the address of the target contract and the encoded function data (\textit{calldata}) to send to it (i.e., the function signature and parameters in encoded form).
 \end{itemize}
 
 Moreover, because \acrlong{sca}s support customizable signature validation logic and decouple externally \acrshort{eoa}s from on-chain execution, SmartAccount can be readily adapted to integrate alternative authentication schemes.
@@ -96,25 +96,25 @@ The \textit{Student} contract encapsulates the majority of the system's logic. I
     label=lst:resultStruct,
     language=Solidity,
 ]{listings/result.sol}
-Due to Solidity's limited support for floating-point numbers, and because the \acrshort{ects} credits may not always be whole number, the \acrshort{ects} value is stored as the original number multiplied by 100. The type \textit{uint16} is used for this purpose, allowing values up to 655.36\footnote{The maximum number representable with 16 bits is 65536},  which is more than sufficient for academic credit systems. A smaller unsigned integer type, such as \textit{uint8}, supports only values from 0 to 2.55 in this context, which is clearly inadequate. The field \textit{certificateHash} stores the CID of the certificate, acting as a reference to its location in the decentralized storage system (see BACKGROUND\_IPFS\_REFERENCE and \cref{sec:decStorageDesgn} for further explanation). 
+Due to Solidity's limited support for floating-point numbers, and because the \acrshort{ects} credits may not always be whole number, the \acrshort{ects} value is stored as the original number multiplied by 100. The type \textit{uint16} is used for this purpose, allowing values up to 655.36\footnote{The maximum number representable with 16 bits is 65536},  which is more than sufficient for academic credit systems. A smaller unsigned integer type, such as \textit{uint8}, supports only values from 0 to 2.55 in this context, which is clearly inadequate. The field \textit{certificateHash} stores the \acrfull{cid} of the certificate, acting as a reference to its location in the decentralized storage system (see BACKGROUND\_IPFS\_REFERENCE and \cref{sec:decStorageDesgn} for further explanation). 
 
-Additional functionalities, all addressing \textit{FR 5} in \cref{tab:funcReq}, include enabling universities to:
+Additional functionalities, all addressing \acrshort{fr} 5 in \cref{tab:funcReq}, include enabling universities to:
 \begin{itemize}
     \item Retrieve a student's personal and academic information.
     \item Enrol the student in a new course.
     \item Record an evaluation for course the student has already attended.
 \end{itemize}
-All such interactions are governed by a strict access control mechanism, implemented to fulfil the relevant functional requirements outlined in \cref{tab:funcReq}, namely \textit{FR 6}, \textit{FR 7}, and \textit{FR 12}. This mechanism is based on the AccessControl library, specifically the \textit{AccessControlEnumerable} extension, which enables the definition of roles and their association with specific addresses. Within the Student contract, four distinct roles are defined:
+All such interactions are governed by a strict access control mechanism, implemented to fulfil the relevant functional requirements outlined in \cref{tab:funcReq}, namely \acrshort{fr} 6, \acrshort{fr} 7, and \acrshort{fr} 12. This mechanism is based on the \textit{AccessControl} library, specifically the \textit{AccessControlEnumerable} extension, which enables the definition of roles and their association with specific addresses. Within the Student contract, four distinct roles are defined:
 
 \begin{enumerate}
-    \item \textbf{reader}
-    \item \textbf{writer}
-    \item \textbf{reader requester}
-    \item \textbf{writer requester}
+    \item \textit{reader}
+    \item \textit{writer}
+    \item \textit{reader requester}
+    \item \textit{writer requester}
 \end{enumerate}
 These roles cover all possible scenarios. When an institution requests read or write access to a student's academic records,  its smart account address is assigned the corresponding role. Since AccessControlEnumerable supports enumeration of role bearers, the student can query and view which institutions have pending access requests. 
-When an institution attempts to access or modify a student's academic records, the Student contract verifies whether the caller's address has been granted the appropriate role, thereby enforcing access restrictions. This mechanism requires the Student contract to support a set of permission management functions, including the ability for students to grant, revoke, and inspect permissions (\textit{FR 12}), as well as for universities to request and verify their access rights (\textit{FR 7}).
-The underlying AccessControl library restricts the permission management functions to holders the \textbf{default admin} role, which is defined within the library itself. The Student contract assign this role to the student, thereby enabling them to manage and control access to their academic data autonomously. 
+When an institution attempts to access or modify a student's academic records, the Student contract verifies whether the caller's address has been granted the appropriate role, thereby enforcing access restrictions. This mechanism requires the Student contract to support a set of permission management functions, including the ability for students to grant, revoke, and inspect permissions (\acrshort{fr} 12 in \cref{tab:funcReq}), as well as for universities to request and verify their access rights (\acrshort{fr} 7 in \cref{tab:funcReq}).
+The underlying AccessControl library restricts the permission management functions to holders of the \textit{default admin} role, which is defined within the library itself. The Student contract assign this role to the student, thereby enabling them to manage and control access to their academic data autonomously. 
 \begin{figure}
   \centering
   \includegraphics[width=0.7\textwidth]{figures/Student class diagram.pdf}
@@ -132,13 +132,13 @@ Upon registration, the initiating university is automatically granted write perm
     \item \textbf{EvaluationInfo}: Contains the data needed to record an evaluation; used as input for the evaluation function.
     \item \textbf{Result}: Previously presented, this structure stores the details of a course attended by the student and is used to return the student's academic records.
     \item \textbf{StudentBasicInfo}: Represents the student's personal information.
-    \item \textbf{StudentInfo}: A composite structure that includes the StudentBasicInfo and a list of Result structures, representing the student’s complete academic profile.
+    \item \textbf{StudentInfo}: A composite structure that includes StudentBasicInfo and a list of Result structures, representing the student’s complete academic profile.
 \end{itemize}
 
 \subsection{Vulnerabilities and Scalability}
-This design is suitable not only for the testing environment but also for deployment in a real-world platform. In Solidity, the usage of aggregated data types, such as arrays or mappings, entails a gas cost that increases with the size of the data structure, particularly when looping or enumerate its content. However, in the context of a student's academic career, the number of universities which requiring access to their academic wallet is typically limited, likely fewer than ten. As a result, the size of the permissions data structures remain small and the associated gas cost does not increase to a level that would pose significant issue.
+This design is suitable not only for the testing environment but also for deployment in a real-world platform. In Solidity, the usage of aggregated data types, such as arrays or mappings, entails a gas cost that increases with the size of the data structure, particularly when looping or enumerate its content. However, in the context of a student's academic career, the number of universities requiring access to their academic wallet is typically limited, likely fewer than ten. As a result, the size of the permissions data structures remain small and the associated gas cost does not increase to a level that would pose significant issue.
 
-A more significant concern arises with the storage of student's academic results, which are currently stored together in a single array. Recording a new evaluation for an existing course requires iterating through the array to locate the appropriate entry. If a student's results set grows to several tens of entries, this operation can incur high costs, undermining platform usability. To mitigate this, we propose a hybrid approach for future enchantments: retain the existing results array so that all records can be retrieved in a single transaction, but also maintain a secondary mapping from the composite key (university address, course code) to the index of the corresponding result in the array. Although this mapping introduces a slight increase in the storage consumption, it enables constant-time lookups and updates for specific courses. This significantly lowers the gas cost for evaluations.  
+A more significant concern arises with the storage of student's academic results, which are currently stored together in a single array. Recording a new evaluation for an existing course requires iterating through the array to locate the appropriate entry. If a student's results set grows to several tens of entries, this operation can incur high costs, undermining platform usability. To mitigate this issue, future enchantments can preserve the existing results array, allowing all records to be retrieved in a single transaction, while also maintaining a secondary mapping from the composite key (university address, course code) to the index of the corresponding result in the array. Although this mapping introduces a slight increase in the storage consumption, it enables constant-time lookups and updates for specific courses. This significantly lowers the gas cost for evaluations.  
 
 Moreover, to minimize the overall cost of the \acrlong{ew} system and its operational expenses, all functions that do not modify the on-chain state, i.e., those that perform only data retrieval, are implemented as read-only operations. In Solidity, these are marked with the \textit{view} or \textit{pure} modifier and execute without gas cost. Given that read operations are generally more frequent that writes, this design choice further curtails the system's cumulative gas expenditures.
 

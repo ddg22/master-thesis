@@ -1,0 +1,1 @@
+if (hasRole(WRITER_APPLICANT, _university))

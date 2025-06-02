@@ -5,62 +5,22 @@ In this chapter, our aim is to describe both the functional and non-functional r
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FUNCTIONAL REQUIREMENTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[htpb]
-\centering
-\caption{Functional Requirements}
-\label{tab:funcReq}
-\begin{tabular}{|p{1.0cm}|p{11cm}|}
-\hline
-\multicolumn{2}{|c|}{\textbf{System Administration}} \\
-\hline
-FR1 & Allow the system administrator to verify and approve universities requesting access to the \acrlong{ew} system. \\
-\hline
-\multicolumn{2}{|c|}{\textbf{University}} \\
-\hline
-FR2 & Enable universities to register and subscribe to the system. \\
-FR3 & Provide secure authentication mechanisms for universities to access the platform. \\
-FR4 & Allow universities to create new smart contract wallets for students upon enrolment. \\
-FR5 & Enable universities to read from and issue academic records to students' smart wallets. \\
-FR6 & Implement authorization controls to ensure that only permitted universities can access or modify specific academic records. \\
-FR7 & Provide a mechanism for universities to request and obtain permission from students before accessing or modifying their academic records. \\
-FR8 & Provide APIs that allow universities to integrate the \acrlong{ew} system with their existing \acrlong{lms}. \\
-\hline
-\multicolumn{2}{|c|}{\textbf{Student}} \\
-\hline
-FR9  & Students must own and manage their academic smart wallets independently. \\
-FR10 & Enable students to securely authenticate and access their smart wallets. \\
-FR11 & Provide students with a web-based interface to view and manage their academic records. \\
-FR12 & Allow students to grant and revoke access permissions to their academic records for specific institutions. \\
-\hline
-\end{tabular}
-\end{table}
 \section{Functional Requirements}
 The primary functional requirement for the system administrator is the ability to register universities following their subscription request. This process must be preceded by a thorough verification of the provided data, in order to ensure that only trusted institutions are granted access to the system. The validation step is fundamental, as universities are the entities entitled to register new students in the academic record. Consequently, if malicious actors are authorized to access the system, its security and the veracity of the stored data could be compromised.
 
-Regarding universities, they must be able to initiate a subscription by submitting their institutional information, including name and country. Upon approval, they require secure authentication mechanisms to access the system and exercise their privileges. Authentication is a critical precondition for nearly all operations, including the viewing and modification of students' data and academic records. These operations may involve retrieving the list of courses attended by a student or issuing a new certification. Furthermore, authenticated universities are responsible for creating \acrfull{sw} for newly enrolled students who do not yet posses one, as well as requesting permission from students to access their existing wallets. Delegating the creation of student \acrshort{sw} to universities accelerates the data verification process, as the system relies on the institution's trustworthiness to validate student information. Academic records are strictly personal data and must be handled with extreme caution. For this reason, without proper authentication, access to student, whether for viewing or modification, must be strictly restricted. 
+Regarding universities, they must be able to initiate a subscription by submitting their institutional information, including name and country. Upon approval, they require secure authentication mechanisms to access the system and exercise their privileges. Authentication is a critical precondition for nearly all operations, including the viewing and modification of students' data and academic records. These operations may involve retrieving the list of courses attended by a student or issuing a new certification. Furthermore, authenticated universities are responsible for creating \acrfull{sw} for newly enrolled students who do not yet posses one, as well as requesting permission from students to access their existing wallets. Delegating the creation of student \acrshort{sw} to universities accelerates the data verification process, as the system relies on the institution's trustworthiness to validate student information. 
+
+Academic records are strictly personal data and must be handled with extreme caution. For this reason, without proper authentication, access to student, whether for viewing or modification, must be strictly restricted. 
 Finally, since blockchain technologies can be difficult to interact with, due to their relatively recent development, the system should expose comprehensive \acrfull{api} endpoints. These can support seamless integration with university \acrfull{lms}, enabling them to interact with and utilize the full rage of fratures offered by \acrlong{ew}.
 
 Students' functional requirements are closely aligned with the core principles of Web3 ownership: students must retain full control over their academic wallets. Consequentially, the \acrshort{ew} system must enable students to securely authenticate and access their \acrshort{sw} via a web interface, which also provides the ability to view and administer their data. A web application eliminates the need to install dedicated software on user devices and ensures a smoother multi-device experience.
 Once authenticated, students should be able to grant universities explicit permissions to access their records, with fine-grained control over viewing and modification rights. This distinction is essential to manage different scenarios appropriately. For example, in the context of an exchange program, the host university should only be allowed to access a student's academic records, and not modify them.
 
+\input{tables/functional_requirements}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NON-FUNCTIONAL REQUIREMENTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{table}[htpb]
-\centering
-\caption{Non-Functional Requirements}
-\label{tab:nonFuncReq}
-\begin{tabular}{|p{1.0cm}|p{11cm}|}
-\hline
-NFR1 & The system shall operate without dependency on third-party wallet providers such as MetaMask. \\
-NFR2 & The system shall minimize reliance on third-party technologies to enhance security and maintain control. \\
-NFR3 & On-chain storage costs shall be minimized by storing only essential data, excluding large files. \\
-NFR4 & Academic records shall be tamper-proof and verifiable by authorized third parties. \\
-NFR5 & The system shall provide an intuitive and user-friendly interface for both students and university administrators. \\
-NFR6 & The system architecture shall be designed to maximize decentralization wherever feasible. \\
-\hline
-\end{tabular}
-\end{table}
 \section{Non-Functional Requirements}
 \label{sec:nonFunctionalRequirements}
 In addition to the presented core features, the system must fulfil several non-functional requirements that ensure robustness, maintainability and alignment with the principles of decentralization. 
@@ -75,7 +35,11 @@ Simplicity and ease of use are also critical. Since our target users are not nec
 
 Finally, the adoption of blockchain technologies is driven by the desire to embrace the defining characteristic of Web3 applications: decentralization. \acrshort{ew} should be designed to operate as a decentralized system, thereby avoiding the limitations and risks associated with centralized architectures, such as data security vulnerabilities, scalability constraints, and privacy concerns. % TODO: talk about Web3 and the advantages of decentralized systems over centralized ones.
 
+\input{tables/non_functional_requirements}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONSTRAINTS AND ASSUMPTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Constraints and Assumptions}
 The system operates under the assumption that the user authentication phase is not the primary focus of the project. Therefore, it is sufficient to implement a basic mechanism to identify users and grant them access to their respective privileges. A key requirement is that this method be easily replaceable or upgradable, allowing for future integration of more sophisticated authentication solutions.
 
