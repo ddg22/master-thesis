@@ -1,1 +1,42 @@
 \chapter{Related Work}
+\label{chap:relatedWork}
+Universities have two fundamental missions: educating students through lectures, seminars, and examinations, and certifying their academic achievements. While the former involves direct interaction between students and faculty, the latter is a documentation-intensive process, traditionally handled via paper records or centralized digital systems, activity that can be tedious and time-consuming. In recent years, many academic institutions have begun exploring blockchain-based solutions to streamline certificate issuance and verification, leveraging the technology’s tamper-resistant properties.
+
+\section{Blockcerts}
+In 2018, the \acrfull{mit} introduced Blockcerts platform  \cite{yassynzhanbolatzhan2021verificationuniversitystudent} as an open-source standard for issuing cryptographically verifiable academic credentials. Originally developed to allow MIT students to receive digital versions of their academic certificates, Blockcerts has since evolved into a community-led project\footnote{\url{https://www.blockcerts.org/}}. The platform provides:
+\begin{itemize}
+    \item A set of libraries (e.g., Python and JavaScript) for creating, issuing, and verifying credentials.
+    \item Mobile applications that allow students to receive, store, and share verifiable certificates.
+    \item Schemas and specifications for building systems that adhere to the Blockcerts standard.
+\end{itemize}
+
+\section{Digital Credential Consortium}
+In 2019, \acrshort{mit}  joined eleven other institutions worldwide to form the \acrfull{dcc}\footnote{\url{https://digitalcredentials.mit.edu}},  including the University of Milano-Bicocca (Italy) and the University of Toronto (Canada). The \acrshort{dcc}'s goal to establish interoperable standards for academic credentials and facilitate secure exchange of student data across institutions. 
+Building upon the foundation laid by \acrshort{mit}’s Blockcerts, the consortium evolved the project to support a broader and more integrated ecosystem. It provides students with mobile applications to access, verify, and share their academic credentials, and offers institutions an administrative dashboard for issuing and managing certificates.
+
+\section{PublicEduChain}
+PublicEduChain \cite{mustafa2024publiceduchain} is a project developed by Gazi University (Turkey) that enables students to manage their educational data on Ethereum. In this model:
+\begin{itemize}
+    \item Each student deploys a personal smart contract via third-party wallets such as MetaMask or Trust Wallet.
+    \item Students register the address of their smart contract within the university’s \acrfull{lms}, which must be modified to support this integration.
+    \item Authorized \acrshort{lms} users (faculty, staff, or other institutions) can write courses information into the student’s smart contract.
+\end{itemize}
+
+\section{Cerberus}
+Tariq et al. introduced Cerberus \cite{tariq2022cerberus}, a blockchain-based system for certificate verification focused on document authenticity. In Cerberus:
+\begin{itemize}
+    \item Universities apply to join the network; once approved, they can upload certificates directly to the blockchain.
+    \item Upon document upload, a unique QR code is generated and linked to the on-chain record.
+    \item Students and other stakeholders can verify any certificate’s authenticity by scanning the QR code.
+\end{itemize}
+
+\section{Conclusions}
+The existing solutions, summarized in \cref{tab:relSolutions}, exhibit several shortcomings relative to our objectives. First, most platforms, including Blockcerts, the \acrshort{dcc}, and Cerberus, focus exclusively on degree certificates without accounting for the full spectrum of academic records that universities issue. While diplomas attest to degree completion, individual course transcripts contain valuable information that students often use for academic exchanges or employment opportunities.
+
+PublicEduChain offers a more comprehensive “academic wallet” model but suffers from poor \acrfull{ux}. Students are responsible for developing and deploying their own smart contracts, which limits adoption to those with technical expertise and places a significant training burden on institutions.
+
+Cerberus, despite addressing certificate verification, does not shift data ownership to students. Instead, it retains the traditional paradigm in which universities issue and hold certificates; students merely verify and share them via QR codes. In contrast, Web3 principles advocate for a model in which students possess and fully control their academic records, granting or revoking access as needed.
+
+By offering a user-friendly \acrshort{ux} for both students and institutions, supporting the full spectrum of academic records, and ensuring that students retain complete ownership of their data, \acrshort{ew} presents a comprehensive solution that aligns with the vision and values of decentralized technologies.
+
+\input{tables/related_solutions}

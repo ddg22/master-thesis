@@ -1,16 +1,11 @@
 \chapter{Introduction}
+We are currently living in a globalized world, where distance is increasingly irrelevant. People move freely across borders, and thanks to digital technologies, everyone is interconnected and can access services regardless of location. Schools and universities are deeply affected by this globalization, and their internal operations are rapidly evolving. Today, many students receive education from a variety of sources, often through online courses offered by institutions in different countries. 
+A further driver of this change is the rise of academic mobility programs, such as the Erasmus program, an initiative by the European Union designed to promote student and faculty exchanges and foster intercultural experiences.
 
-\section{Context}
-The introduction and diffusion of blockchain technologies have...
+However, these opportunities introduce challenges in managing and sharing students' academic records. Typically, each university maintains its own format and system for storing academic data, which creates friction when this information needs to be exchanged. When a student transfers to another institution or participates in an exchange program, they must present verified academic documentation, including diplomas and course transcripts. Currently, students are required to request certified digital or paper documents from their home institution, which must be signed and validated by the university. They then submit these to the receiving institution, which must verify the authenticity of both the data and the signatures. This multi-step process is burdensome for both students and universities, involving significant administrative overhead and document handling.
 
-\section{Problem}
+Given our experience with the Erasmus exchange program, and the tedious process of requesting documentation, waiting for it, and resolving discrepancies between universities regarding content and validation, we decided to develop this project. The aim of this thesis is to provide both students and universities with a unified system for storing and sharing academic records. \acrfull{ew} leverages blockchain technology, utilizing its tamper-proof and verifiable nature to allow universities to securely issue academic records and certificates, while enabling students to access them through ownership of an academic wallet in which the records are stored. User interaction is a central focus of this work, as the solution is intended for students of all backgrounds, without requiring specific computer science skills. Therefore, the system is designed to abstract the complexity of its blockchain-based core.
 
-\section{Motivation}
-
-\section{Objectives}
-
-\section{Approach}
-
-\section{Contributions}
-
-\section{Road map}
+The remainder of this document is structured as follows: the next chapter, \cref{chap:background}, provides the necessary background information on blockchain and the technologies used within \acrshort{ew}. \Cref{chap:relatedWork} presents the related work. Based on the context established in the previous chapters, \cref{chap:problemStatement} explains the problem addressed in this thesis and introduces the use cases that guided the system design. \Cref{chap:requirements} outlines the requirements derived from these use cases.
+The design of the proposed solution is presented in \cref{chap:systemArchitecture}, which gives an overview of the components that make up \acrshort{ew}, and is further detailed in \cref{chap:onchainDesign} and \cref{chap:offchainDesign}, which describe the on-chain and off-chain elements, respectively. The tools and code used for the development of the system are discussed in \cref{chap:implementation}.
+A discussion on the solution and the outcomes of this work is provided in \cref{chap:validation}. Finally, \cref{chap:conclusion}  concludes the thesis by summarizing its main contributions and \cref{chap:futureWork} presents directions for future research
