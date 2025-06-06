@@ -8,6 +8,7 @@ Key implementations aspects include the use of account abstraction for users acc
 % DEVELOPMENT ENVIRONMENT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Development Environment}
+\label{sec:developmentEnvironment}
 This section outlines the tools and technologies used to author, compile, and test \acrlong{ew} system.
 
 The primary code editor is Visual Studio Code\footnote{\url{https://code.visualstudio.com/}}, chosen for its lightweight footprint and extensive ecosystem of extensions. To support Solidity development, we installed the Nomic Foundation's Solidity extension, which provides syntax highlighting, inline error detection, and code completion directly within the editor, thereby accelerating development and debugging.
@@ -18,7 +19,7 @@ To compile contracts and simulate a local blockchain, we utilize Hardhat\footnot
 \begin{itemize}
     \item \textbf{Solidity compiler version}: 0.8.28 (the latest fully supported by Hardhat at the time of writing)\footnote{Versions 0.8.29 and 0.8.30 were not yet fully supported.}
     \item \textbf{EVM version}: Cancun
-    \item \textbf{Optimizer settings}: Enabled with 1000 runs to reduce bytecode size and keep contracts (e.g., \texttt{Student}, \texttt{EntryPoint}) below the 24576-byte limit.
+    \item \textbf{Optimizer settings}: Enabled with 1000 runs to reduce bytecode size and keep contracts (e.g., Student, EntryPoint) below the 24576-byte limit.
     \item \textbf{Preconfigured account}: A single funded \acrshort{eoa} serves as deployer, funder for student and university wallets, and system administrator. Its private key is fixed to ensure deterministic contract addresses, as these are derived from the deployer’s key and the number of contracts deployed by the account (\gls{nonce}).
 \end{itemize}
 The complete Hardhat configuration file can be found in \cref{chap:hardhatConf}.
