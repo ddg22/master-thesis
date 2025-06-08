@@ -130,7 +130,7 @@ Roles can be granted or revoked using methods provided by the AccessControlEnume
     \item \_grantRole
     \item \_revokeRole
 \end{itemize}
-The key distinction between these methods is their access control. The functions \textit{grantRole} and \textit{revokeRole} can only be invoked in a transactions initiated by the entity holding the DEFAULT\_ADMIN\_ROLE, whereas \textit{\_grantRole} and \textit{\_revokeRole} are unrestricted methods. The DEFAULT\_ADMIN\_ROLE is defined by the AccessControlEnumerable library and must be assigned to the administrator of the roles, in our case the student. This role is granted at the time of smart account creation. The unrestricted methods are primarily used in functions involving universities (e.g., permission requests), while the permissioned methods are used by students (e.g., permission revocation).
+The key distinction between these methods is their access control. The functions \textit{grantRole} and \textit{revokeRole} can only be invoked in a transactions initiated by the entity holding the \textit{DEFAULT\_ADMIN\_ROLE}, whereas \textit{\_grantRole} and \textit{\_revokeRole} are unrestricted methods. The DEFAULT\_ADMIN\_ROLE is defined by the AccessControlEnumerable library and must be assigned to the administrator of the roles, in our case the student. This role is granted at the time of smart account creation. The unrestricted methods are primarily used in functions involving universities (e.g., permission requests), while the permissioned methods are used by students (e.g., permission revocation).
 
 To enforce role-based access, the contract uses the \textit{onlyRole} function modifier (\cref{lst:roleModifier}) and the \textit{hasRole} method (\cref{lst:roleMethod}). The modifier restricts access to function execution based on role possession, while the method allows for role verification at runtime. Both tools are provided by the OpenZeppelin access control library.
 \lstinputlisting[
@@ -162,6 +162,7 @@ Both the browser extension and the \acrshort{sdk} use the \textit{id} function f
 % DECENTRALIZED STORAGE SYSTEM INTERACTION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Decentralized Storage System Interaction}
+\label{sec:decentralizedStorageImpl}
 \acrlong{ew} employs a decentralized storage system to manage certificates linked to academic records. Both the browser extension and the \acrshort{sdk} can retrieve files, but only the \acrshort{sdk} is responsible for uploading them on it.
 
 File retrieval is performed via the public \acrshort{ipfs} gateway \acrshort{url}. By appending a file's \acrshort{cid} to this gateway \acrshort{url}, students and universities can directly access the document. This gateway is hardcoded in both the browser extension and the \acrshort{sdk}, as shown in \cref{lst:ipfsAccess}. The corresponding \acrshort{cid} for each certificate is stored on-chain and retrieved when querying academic results.

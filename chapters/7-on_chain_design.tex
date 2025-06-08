@@ -49,7 +49,7 @@ One of the most significant obstacles to the widespread adoption of blockchain t
   \label{fig:accountAbstraction}
 \end{figure}
 
-ERC‑4337, introduced in 2021 by Vitalik Buterin and others \cite{buterin2021erc}, defines account abstraction on Ethereum. It enables users to leverage \gls{sca} with custom logic as their primary on‑chain accounts, replacing traditional \gls{eoa}. User actions are encapsulated in pseudo‑transactions called \textit{UserOperations}, whose life cycle is illustrated in \cref{fig:accountAbstraction}. Each UserOperation may bundle multiple on‑chain actions, such as contract calls or token transfers, and includes all necessary execution data. When creating a UserOperation, the user specifies the target \gls{sca} and signs the operation to authorize both its execution and associated gas consumption.
+ERC‑4337, introduced in 2021 by Vitalik Buterin and others \cite{buterin2021erc}\cite{lin2024accountabstraction}, defines account abstraction on Ethereum. It enables users to leverage \gls{sca} with custom logic as their primary on‑chain accounts, replacing traditional \gls{eoa}. User actions are encapsulated in pseudo‑transactions called \textit{UserOperations}, whose life cycle is illustrated in \cref{fig:accountAbstraction}. Each UserOperation may bundle multiple on‑chain actions, such as contract calls or token transfers, and includes all necessary execution data. When creating a UserOperation, the user specifies the target \gls{sca} and signs the operation to authorize both its execution and associated gas consumption.
 Signed UserOperations are submitted to a \gls{mempool}, where specialized nodes called bundlers collect and aggregate them into a single on‑chain transaction. This transaction is sent to an entry point contract on Ethereum, which unpacks each UserOperation and dispatches it to the designated \gls{sca}. The \gls{sca} then executes the required actions and handles fee payments, effectively becoming the transaction sender.
 
 A key feature of ERC‑4337 is the ability to designate a paymaster, such as our system’s Paymaster contract, to sponsor gas fees on the user’s behalf. If the paymaster approves, it covers the transaction costs, allowing users to interact with \gls{ew} without managing wallets or tokens directly.
@@ -61,7 +61,7 @@ Some features introduced by this standard in Ethereum are:
     \item \textbf{Bundled Operations}: Users can combine multiple transactions into a single UserOperation, reducing the aggregate cost compared to separate transactions.
 \end{itemize}
 
-However, one of the trade-offs of using account abstraction is the higher transaction cost. Due to the added complexity and number of steps involved, executing a UserOperation is typically about four times more expensive than a traditional transaction initiated by an \gls{eoa}.
+However, one of the trade-offs of using account abstraction is the higher transaction cost. Due to the added complexity and number of steps involved, executing a UserOperation is typically about four times more expensive than a traditional transaction initiated by an \gls{eoa} \cite{lin2024accountabstraction}.
 
 In our implementation, since the system runs in a local test environment where no public bundlers are available, UserOperations are sent directly to the entry point contract, which then forwards them to the appropriate \gls{sca} for execution.
 

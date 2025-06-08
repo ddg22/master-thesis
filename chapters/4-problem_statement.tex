@@ -10,13 +10,21 @@ On the students side, instead, we want to follow Web3 rule about data ownership 
 % USE CASE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Use Case}
-By analysing this problem, we developed a use case to simulate the usage of \gls{ew}, involving four main actors:
+By analysing this problem, we developed a use case, illustrated in \cref{fig:sequenceDiagram}, to simulate the usage of \gls{ew}. The scenario involves four main actors:
 \begin{itemize}
     \item The \textbf{home university}, which issues certificates and records evaluations during the student's regular academic career.
     \item The \textbf{host university}, which requires access to the student's academic data when the exchange project begins.
     \item The \textbf{student}, who participates in an exchange project, such as the Erasmus+ program. At the beginning of the program, they must send their academic history to the host university. At the end of the program, the home university must certify the results obtained at the host institution.
     \item The \textbf{administrator} of the \gls{ew} system, who manages the registration of students and universities in the platform.
 \end{itemize}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{figures/Sequence diagram.pdf}
+  \caption[Sequence diagram of the EduWallet use case]{Sequence diagram illustrating the chronological interactions between student, universities, EduWallet, and the system administrator during the academic exchange process.}
+  \label{fig:sequenceDiagram}
+\end{figure}
+
 The first step is the registration of universities in the \gls{ew} system. Universities request access from the system administrator, who verifies their information and, upon approval, registers them into the platform.
 
 Once the universities are present in the system, the student begins their academic career by enrolling in the home university. As with traditional enrolment, the university verifies the student's identity and, once validated, creates an account for them in \gls{ew}. With the account created and the appropriate permissions, the home university can begin registering the student's academic evaluation.

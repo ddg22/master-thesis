@@ -1,8 +1,12 @@
-\chapter{Validation}
-\label{chap:validation}
-The aim of this work was to develop an academic records registry leveraging blockchain technologies, providing students and universities with a reliable system to store and share academic data, thus updating the standard for information management. To create this system, we developed several on-chain and off-chain components that interact to form the \gls{ew} solution. System validation was conducted by testing all components and analysing the results provided by the testing environment.
+\chapter{Results}
+\label{chap:results}
+This chapter presents the results obtained through the validation of the proposed solution, as described in the previous chapters. The validation involved testing all the developed components that interact to form \gls{ew}, and analysing the outcomes produced by the testing environment.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMPONENTS VALIDATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Components Validation}
+\label{sec:componentsValidation}
 The goal of the components validation was to verify whether all the system functionalities, as outlined in \cref{chap:requirements}, had been properly implemented. To perform this verification, we carried out various system-level tests focusing on the interaction among components.
 
 The tests were conducted in the local testing environment, with the Ethereum node configured as explained in \cref{sec:developmentEnvironment}. Given that all elements of the \gls{ew} solution are tightly integrated and designed to work in synergy, the most effective validation approach was to test them as a cohesive unit, specifically, by validating the \gls{sdk} and the browser extension together.
@@ -11,11 +15,14 @@ The \gls{sdk} functionalities were tested through the \gls{cli}, using its \gls{
 
 These functional tests revealed a few bugs in system behaviour. For instance, while testing data input through the \gls{cli}, we encountered an issue with date handling: since dates are stored as unsigned timestamps, any date before January 1, 1970, was rejected by the smart contracts, causing transactions to fail. As a result, we implemented additional checks in the off-chain components to validate and restrict date inputs to compatible values. We also noticed occasional graphical glitches in the browser extension. In some cases, a student’s academic record was correctly retrieved but not displayed in the interface. The data would appear only after switching views, for example, from the wallet page to the personal information page.  These issues are likely caused by imperfect handling of the extension’s internal state management and have been noted for future refinement.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TRANSACTIONS ANALYSIS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Transactions Analysis}
 One of the features provided by the local Hardhat node used to test our on-chain components is the ability to analyse transactions. As shown in \cref{fig:exampleTransaction}, Hardhat enables inspection of each transaction and its related information, including the sender and receiver addresses, the amount of \gls{eth} transferred, the computational effort consumed (gas used), and the hash of the block that contains the transaction.
 \begin{figure}
   \centering
-  \includegraphics[width=0.9\textwidth]{figures/hardhatExample.png}
+  \includegraphics[width=0.8\textwidth]{figures/hardhatExample.png}
   \caption[Transaction information from the local Hardhat node]{Transaction information from the local Hardhat node}
   \label{fig:exampleTransaction}
 \end{figure}
@@ -35,16 +42,16 @@ For the remaining transactions, as expected, the costs on the Ethereum network a
 An important optimization enabled by our system is the ability to enrol in and evaluate multiple courses within a single transaction. This feature significantly improves cost-efficiency compared to processing each course in a separate transaction.
 
 \begin{figure}
-    \centering
-    \begin{subfigure}{0.99\textwidth}
-      \centering
+    %\centering
+    \begin{subfigure}{\textwidth}
+      %\centering
       \includegraphics[width=\textwidth]{figures/ethCosts.png}
       \caption{Distribution diagram of operation costs in the Ethereum network}
       \label{fig:ethCosts}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.99\textwidth}
-      \centering
+    \begin{subfigure}{\textwidth}
+      %\centering
       \includegraphics[width=\textwidth]{figures/polCosts.png}
       \caption{Distribution diagram of operation costs in the Polygon network}
       \label{fig:polCosts}

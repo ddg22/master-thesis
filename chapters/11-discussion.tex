@@ -1,0 +1,34 @@
+\chapter{Discussion}
+\label{chap:discussion}
+This thesis addresses a simple but impactful problem: the difficulties faced by students and universities in managing academic records. As discussed in \cref{chap:introduction} and \cref{chap:problemStatement}, despite the increasing globalization of higher education, universities still share students' academic results through digital or paper-based documents. This leads to bureaucratic inefficiencies and wasted time.
+The goal of this work was to develop a blockchain-based academic records registry that offers a reliable, modernized way for students and universities to store and share academic data. This chapter reflects on the proposed solution, considers the results presented in \cref{chap:results}, and suggests key directions for future work.
+
+The results show that our solution successfully satisfies all defined \glspl{fr} and \glspl{nfr}, demonstrating its compatibility with real-world usage. The cost per student remains low on both Ethereum and Polygon networks, confirming the economic feasibility of our approach. The contribution of the \gls{ew} system lies in providing a complete platform, with interfaces for both students and universities, that enables blockchain-backed academic record management in a user-friendly, “black-box” manner. Our design abstracts away the blockchain complexities, allowing users to focus solely on the core functionalities.
+As discussed in \cref{chap:relatedWork}, prior projects in this domain often fall short in one or more areas: they either limit themselves to academic certificates, provide inadequate user interfaces that require students to deploy their own smart contracts, or fail to uphold Web3 principles of data ownership by giving universities sole control over records. \gls{ew} addresses these limitations by leveraging emerging standards such as account abstraction to streamline interaction and decentralize ownership.
+
+That said, our solution does present certain weaknesses. The most notable is its current limitation to a local development environment. While this setup facilitated faster development and avoided unnecessary \gls{eth} consumption during smart contract iteration, it prevented us from testing the system under real-world conditions, including network latency, congestion, and fluctuating gas prices. Another challenge lies in the system’s complexity and management. \gls{ew} is a large-scale project composed of multiple tightly integrated components, each with specific configurations and dependencies. Coordinating these components proved demanding and may have benefitted from dedicated project management tools designed for modular, distributed systems.
+
+A further technical challenge was the use of account abstraction. As a relatively new and rapidly evolving technology, up-to-date resources and documentation were often lacking. Moreover, its integration required a deeper, lower-level interaction with the blockchain, particularly when crafting UserOperations manually, adding complexity to the development process.
+
+Despite these challenges, \gls{ew} represents a complete solution. It demonstrates how blockchain technology can be used to securely manage students' academic records without compromising ease of interaction.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FUTURE WORK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Future Work}
+Among the many possible enhancements for our system, we identify three future directions that offer the most significant value to the current solution. These proposals span three key areas of improvement:
+\begin{enumerate}
+\item System testing
+\item Functionality expansion
+\item \gls{ux} and \gls{ui} refinement
+\end{enumerate}
+
+\subsection{Public Network Deployment}
+As previously mentioned in this chapter, one of the main limitations of our solution is its deployment and testing within a local blockchain environment.
+A critical next step to strengthen the system’s validation is deploying the smart contracts on a public test network, which provides a more realistic environment. Future developers will need to select the target network(s), either the Ethereum main network or a Layer 2 solution, and update the corresponding configuration values currently hardcoded in the system.
+
+\subsection{New Stakeholder: the Employer}
+A significant functional improvement would be the introduction of a new stakeholder: the employer. This addition would enable students to share verifiable academic credentials with prospective employers. Employers could be granted access to \gls{ew} via temporary accounts and a dedicated interface, or alternatively through expiring links or \glspl{qr} code, following the example of Cerberus \cite{tariq2022cerberus} as discussed in \cref{sec:cerberus}. This feature would expand the platform’s use beyond academia and enhance its relevance in professional settings.
+
+\subsection{Browser Extension Data Management}
+As outlined in \cref{sec:componentsValidation}, the browser extension currently experiences sporadic bugs related to data visualization, likely originating from its internal data handling mechanisms. Improving the reliability of this component would significantly enhance the student experience. A valuable enhancement would involve redesigning the extension’s data management logic to eliminate these issues and ensure consistent, error-free interaction with academic wallets.

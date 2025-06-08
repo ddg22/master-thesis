@@ -270,9 +270,25 @@
 \definecolor{thesisred}{rgb}{.4, .05, .15}
 \definecolor{thesisgreen}{rgb}{.2, .3, .2}
 
+% Define custom colors for syntax highlighting
+\definecolor{tskeyword}{rgb}{0.0, 0.0, 0.6}
+\definecolor{tscomment}{rgb}{0.0, 0.5, 0.0}
+\definecolor{tsstring}{rgb}{0.58, 0, 0.82}
+\definecolor{verylightgray}{rgb}{.97,.97,.97}
+
+\usepackage{listings-solidity}
+\usepackage{listings-typescript}
+
+
 % Formatting of code listings
 \lstset{
     frame=single,
+    backgroundcolor=\color{verylightgray},
+    extendedchars=true,
+    showstringspaces=false,
+    showspaces=false,
+    breaklines=true,
+    tabsize=4,
     basicstyle=\fontsize{9}{10}\ttfamily,
     keywordstyle=\color{thesisblue}\bfseries,
     stringstyle=\color{thesisred},
